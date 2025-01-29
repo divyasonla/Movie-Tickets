@@ -1,2 +1,8 @@
 @import './assets/Inter/inter.css';
 @import 'frappe-ui/src/style.css';
+
+
+body{
+    background: #352e68 linear-gradient(to right, black, transparent);
+    color:white
+}

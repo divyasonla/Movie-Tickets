@@ -1,32 +1,38 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "prompt",
- "creation": "2025-01-25 22:43:10.060007",
+ "creation": "2025-01-29 14:30:27.005177",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "address"
+  "title",
+  "description",
+  "poster"
  ],
  "fields": [
   {
-   "fieldname": "address",
+   "fieldname": "title",
+   "fieldtype": "Link",
+   "label": "Title",
+   "options": "movie"
+  },
+  {
+   "fieldname": "description",
    "fieldtype": "Small Text",
-   "label": "Address"
+   "label": "Description"
+  },
+  {
+   "fieldname": "poster",
+   "fieldtype": "Attach Image",
+   "label": "Poster"
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [
-  {
-   "link_doctype": "Theater Show",
-   "link_fieldname": "theater"
-  }
- ],
- "modified": "2025-01-27 15:53:42.912373",
+ "links": [],
+ "modified": "2025-01-29 14:32:01.235011",
  "modified_by": "Administrator",
  "module": "Movie Tickets",
- "name": "Movie Theater",
- "naming_rule": "Set by user",
+ "name": "Banner",
  "owner": "Administrator",
  "permissions": [
   {
@@ -44,6 +50,5 @@
  ],
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+ "states": []
 }
