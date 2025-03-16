@@ -17,18 +17,31 @@
           {{ movieDoc.release_date }}
         </p>
       </div>
-    </div>
+      </div>
 
-    <div class="max-w-full">
-      <div class="mx-12" v-if="currentStep === 0">
-        <div class="p-2 mt-7 bg-white shadow-2xl rounded w-full md:w-3/4 lg:w-1/2 mx-auto">
-          <img :src="movieDoc.poster" alt="Movie Poster" />
-        </div>
+      <div class="max-w-full">
+        
+        <div class="mx-12" v-if="currentStep === 0">
+           <div class="flex justify-center space-x-4 mt-4">
+              <img :src="movieDoc.img_1" class="w-1/4 max-w-[150px] h-[120px]  object-cover rounded-md" />
+              <img :src="movieDoc.img_2" class="w-1/3 max-w-[150px] h-[120px] object-cover rounded-md" />
+              <img :src="movieDoc.img_3" class="w-1/3 max-w-[150px] h-[120px] object-cover rounded-md" />
+            </div>
+
+      <div class="p-2 mt-7 bg-white shadow-2xl rounded mx-auto w-full max-w-screen-md">
+        <img 
+          :src="movieDoc.poster" 
+          alt="Movie Poster" 
+          class="w-full h-auto max-h-[500px] object-contain rounded-md"
+        />
+      </div>
+
 
         <div class="w-full flex items-center justify-center mt-7">
           <Button size="xl" variant="solid" @click="currentStep++"
             >Book Tickets</Button
           >
+          
         </div>
 
         <div class="flex flex-col space-y-3 mt-16">
@@ -45,7 +58,7 @@
         <div class="flex flex-col w-full space-y-5 mt-6">
           <Button
             size="lg"
-            :variant="index === bookingData.numberOfSeats ? 'subtle' : 'white'"
+            :variant="index === bookingData.numberOfSeats ? 'subtle' : 'pink'"
             class="shadow-lg"
             v-for="index in 8"
             @click="setNumberOfSeats(index)"
@@ -57,7 +70,7 @@
       <div v-else-if="currentStep === 2">
         <div class="flex flex-col space-y-4">
           <h2 class="font-medium text-xl mt-7 text-yellow-200">Date</h2>
-          <Input type="date" v-model="bookingData.date" />
+          <Input  class="text-gray-200 bg-white/30 backdrop-blur-md p-2 rounded-md" type="date" v-model="bookingData.date" />
         </div>
 
         <div class="flex flex-col space-y-4">
@@ -67,27 +80,29 @@
             <div
               v-for="theater in Object.keys(theaterShows.data)"
               :key="theater.name"
-              class="bg-white shadow-xl p-4 rounded flex flex-col space-y-4"
+              class="bg-white/30 backdrop-blur-md shadow-xl p-4 rounded flex flex-col space-y-4"
             >
-              <h3 class="text-sm font-bold text-gray-800">{{ theater }}</h3>
+              <h3 class="text-sm font-bold text-black-400">{{ theater }}</h3>
               <div class="flex flex-row space-x-2">
                 <Button
-                  @click="bookingData.show = show.name"
-                  :key="show.name"
-                  v-for="show in theaterShows.data[theater]"
-                  size="sm"
-                  :variant="
-                    show.name === bookingData.show ? 'subtle' : 'outline'
-                  "
-                  >{{ show.start_time }}</Button
-                >
+                    @click="bookingData.show = show.name"
+                    :key="show.name"
+                    v-for="show in theaterShows.data[theater]"
+                    size="sm"
+                    :class="show.name === bookingData.show 
+                      ? 'bg-[#6666ff] text-white' 
+                      : 'bg-transparent border border-[#6666ff] text-[#6666ff]'"
+                    >                  
+                    {{ show.start_time }}
+                  </Button>
+
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div v-else-if="currentStep === 3">
+        <div v-else-if="currentStep === 3">
         <h2 class="font-medium text-xl mt-7 text-yellow-300">Select Seats</h2>
 
         <div>
@@ -118,7 +133,7 @@
       <div v-else-if="currentStep === 4">
         <div class="w-full flex items-center flex-col mt-7">
           <h1 class="text-[110px]">🍿</h1>
-          <h2 class="font-medium text-xl mt-7 text-gray-900">
+          <h2 class="font-medium text-xl mt-7 text-grey-300">
             Enjoy the movie!
           </h2>
         </div>

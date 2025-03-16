@@ -1,70 +1,199 @@
 <template>
-    <div class="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 ">
-        <!-- Navbar -->
-        <!-- <Navbar /> -->
+  <NavBar />
+  <div class="container p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+    <h1 class="title text-center text-red-500">List of Movies</h1>
 
-        <!-- Space between Navbar and List -->
-        <div class="mt-6 sm:mt-[10%] md:mt-10 lg:mt-12 flex flex-row justify-center items-center"></div>
-
-        <!-- Header -->
-        <h1 
-            class="font-bold text-red-500 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-6 text-center"
-        >
-            List of Movies
-        </h1>
-
-        <!-- Movie List -->
-        <ul 
-            v-if="movies.data" 
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 w-full mx-auto"
-        >
-            <li 
-                v-for="movie in movies.data" 
-                :key="movie.name" 
-                class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col"
-            >
-                <!-- Movie Poster -->
-                <img 
-                    :src="movie.poster" 
-                    alt="Movie Poster" 
-                    class="w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 object-cover"
-                />
-
-                <!-- Movie Details -->
-                <div class="p-3 sm:p-4 md:p-5 lg:p-6 flex-1">
-                    <!-- Movie Title -->
-                    <router-link 
-                        :to="{ name: 'MovieDetails', params: { movieName: movie.name } }" 
-                        class="font-bold text-lg sm:text-xl md:text-2xl text-red-600 text-center hover:underline block mb-2"
-                    >
-                        {{ movie.title }}
-                    </router-link>
-
-                    <!-- Movie Description -->
-                    <p v-if="movie.description" class="text-gray-600 text-sm sm:text-base md:text-lg text-center">
-                        {{ movie.description }}
-                    </p>
-                </div>
-            </li>
-        </ul>
-
-        <!-- Fallback if no movies -->
-        <p 
-            v-else 
-            class="text-gray-600 text-center mt-6 text-lg sm:text-xl md:text-2xl"
-        >
-            No movies available at the moment.
-        </p>
+    <!-- Filter Section -->
+   <div class="filter-section mb-6 flex flex-wrap gap-4 justify-center">
+      <input v-model="searchQuery" type="text" placeholder="Search by movie name" class="border p-2 w-1/3 rounded-lg bg-gray-900" />
+      
     </div>
+
+    <!-- Movie List Categorized by Movie Type -->
+    <div v-for="(movies, type) in categorizedMovies" :key="type" class="mb-8">
+      <h2 class="text-xl font-bold text-blue-600 mb-4">{{ type }}</h2>
+      
+      <div v-if="movies.length" class="movies-container flex gap-4 overflow-x-auto p-4">
+        <div 
+          v-for="movie in movies" 
+          :key="movie.name" 
+          class="movie-item bg-white shadow-lg rounded-xl overflow-hidden flex-shrink-0 cursor-pointer group relative w-60"
+          @click="openModal(movie)"
+        >
+          <!-- Movie Poster -->
+          <img 
+            :src="movie.poster" 
+            alt="Movie Poster" 
+            class="movie-poster w-full h-72 object-cover group-hover:blur-sm transition-all duration-300"
+          />
+            <div class="absolute top-4 right-4 px-2 bg-emerald-700 py-1 rounded-md">
+             <p class="flex items-center gap-1 justify-center text-white-900 text-white font-bold">
+               <span>{{ movie.vote }}</span>
+               <Icon icon="material-symbols:star-rounded" color="blue" />
+             </p>
+           </div>
+
+          <!-- Movie Info -->
+          <div class="movie-info p-3">
+            <router-link 
+              :to="{ name: 'MovieDetails', params: { movieName: movie.name } }" 
+              class="movie-title font-bold text-lg text-red-600 text-center hover:underline block mb-2"
+            >
+              {{ movie.title }}
+            </router-link>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Movies Message -->
+      <p v-else class="text-gray-600 text-center mt-4">No movies available in this category.</p>
+    </div>
+
+    <!-- Modal for Movie Details -->
+    <div v-if="showModal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="modal-content p-8 rounded-xl shadow-lg max-w-md mx-auto bg-gray-100" style="background-color: #e6e6ff">
+        <img :src="selectedMovie.poster" alt="Movie Poster" class="modal-poster w-1/2 h-64 object-cover mb-4 mx-auto block" />
+        
+        <h2 class="modal-title font-bold text-2xl text-blue-400 mb-4 text-center">{{ selectedMovie.title }}</h2>
+        
+        <p class="text-gray-800 text-sm text-center"><span class="font-bold">Released on:</span> {{ selectedMovie.release_date }}</p>
+        <p class="text-gray-700 text-sm text-center"><span class="font-bold">Director:</span> {{ selectedMovie.director }}</p>
+         <p class="text-gray-700 text-sm text-center"><span class="font-bold">Duration:</span> {{ selectedMovie.movie_duration }}</p>
+        <p class="text-gray-700 text-sm text-center"><span class="font-bold">Language:</span> {{ selectedMovie.language }}</p>
+
+        <p class="text-gray-600 text-sm text-center"><span class="font-bold">Description:</span> {{ selectedMovie.synopsis }}</p>
+        <div v-if="selectedMovie.movie_link" class="mt-4">
+          <p class="text-gray-700 text-sm font-bold">Watch Video:</p>
+          <iframe 
+            :src="formatVideoLink(selectedMovie.movie_link) + '?controls=0&showinfo=0&modestbranding=1&rel=0'"
+            class="w-full h-64 rounded-lg"
+            frameborder="0" 
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="flex justify-between">
+       <button @click="closeModal" class="mt-4 px-6 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 text-left">
+          Close
+        </button>
+
+        <router-link :to="{ name: 'MovieDetails', params: { movieName: selectedMovie.name } }" class="block mt-4">
+          <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition duration-300 text-right">
+            Book Tickets
+          </button>
+        </router-link>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
 import { createListResource } from 'frappe-ui';
-// import Navbar from "../components/Navbar.vue";
+import { Icon } from '@iconify/vue';
+import NavBar from './NavBar.vue';
 
 const movies = createListResource({
-    doctype: 'movie',
-    fields: ['name', 'title', 'release_date', 'director', 'poster'],
-    auto: true,
+  doctype: 'movie',
+  fields: ['name', 'title', 'release_date', 'director', 'poster', 'vote','synopsis', 'movie_type','movie_duration','language','movie_link'],
+  auto: true,
 });
+
+const showModal = ref(false);
+const selectedMovie = ref(null);
+const searchQuery = ref("");
+
+// Modal Open Function
+const openModal = (movie) => {
+  selectedMovie.value = movie;
+  showModal.value = true;
+};
+
+// Modal Close Function
+const closeModal = () => {
+  showModal.value = false;
+};
+
+// Filtered Movies
+const filteredMovies = computed(() => {
+  if (!searchQuery.value) return movies.data || [];
+  return (movies.data || []).filter(movie => 
+    movie.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+  );
+});
+
+
+// Categorized Movies
+const categorizedMovies = computed(() => {
+  const categories = {};
+  filteredMovies.value.forEach(movie => {
+    if (!categories[movie.movie_type]) categories[movie.movie_type] = [];
+    categories[movie.movie_type].push(movie);
+  });
+  return categories;
+});
+const formatVideoLink = (url) => {
+  if (!url) return '';
+
+  const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]+)/;
+  const match = url.match(youtubeRegex);
+
+  if (match) {
+    return `https://www.youtube.com/embed/${match[2]}?controls=0&showinfo=0&modestbranding=1&rel=0`;
+  }
+
+  return url; 
+};
+
+// Clear Filters
+// const clearFilters = () => {
+//   searchQuery.value = "";
+// };
 </script>
+
+<style scoped>
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.movies-container {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 16px;
+}
+
+.movie-item {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.movie-item:hover {
+  transform: scale(1.05);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+}
+</style>

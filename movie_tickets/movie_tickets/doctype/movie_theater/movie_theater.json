@@ -1,18 +1,50 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "prompt",
  "creation": "2025-01-25 22:43:10.060007",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "address"
+  "location",
+  "capacity",
+  "address",
+  "poster",
+  "video_link",
+  "facilities"
  ],
  "fields": [
   {
    "fieldname": "address",
    "fieldtype": "Small Text",
    "label": "Address"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "label": "Capacity"
+  },
+  {
+   "fieldname": "poster",
+   "fieldtype": "Attach Image",
+   "label": "Poster"
+  },
+  {
+   "fieldname": "video_link",
+   "fieldtype": "Data",
+   "label": "Video Link"
+  },
+  {
+   "fieldname": "facilities",
+   "fieldtype": "Table",
+   "label": "Facilities",
+   "options": "Movie Facilities"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -22,7 +54,7 @@
    "link_fieldname": "theater"
   }
  ],
- "modified": "2025-01-27 15:53:42.912373",
+ "modified": "2025-01-31 23:57:44.883138",
  "modified_by": "Administrator",
  "module": "Movie Tickets",
  "name": "Movie Theater",

@@ -1,12 +1,19 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 import { session } from './data/session'
 import { userResource } from '@/data/user'
+// import MovieList from '@/pages/MovieList.vue';
 
 const routes = [
+ 
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/pages/Home.vue'),
+    component: () => import('@/pages/Home.vue'), // Home component
+  },
+  {
+    path: '/movies',
+    name: 'MovieList',
+    component: () => import('@/pages/MovieList.vue'),
   },
   {
     name: 'Login',
@@ -18,29 +25,32 @@ const routes = [
     path:'/movies/:movieName',
     component: () => import('@/pages/MovieDetails.vue'),
     props:true,
-  }
-]
-
+  },
+ 
+  
+];
 let router = createRouter({
   history: createWebHistory('/frontend'),
   routes,
 })
 
 router.beforeEach(async (to, from, next) => {
-  let isLoggedIn = session.isLoggedIn
+  let isLoggedIn = session.isLoggedIn;
   try {
-    await userResource.promise
+    await userResource.promise;
   } catch (error) {
-    isLoggedIn = false
+    isLoggedIn = false;
   }
 
   if (to.name === 'Login' && isLoggedIn) {
-    next({ name: 'Home' })
+    next({ name: 'Home' });
   } else if (to.name !== 'Login' && !isLoggedIn) {
-    next({ name: 'Login' })
+    next({ name: 'Login' });  // ✅ 'Login' ka name match hoga
   } else {
-    next()
+    next();
   }
-})
+});
 
-export default router
+
+
+export default router;

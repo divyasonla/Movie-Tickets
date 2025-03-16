@@ -19,13 +19,14 @@
   },
   {
    "fieldname": "start_time",
-   "fieldtype": "Time",
-   "label": "Start Time"
+   "fieldtype": "Select",
+   "label": "Start Time",
+   "options": "3:00PM - 6:00PM\n7:00PM - 9:00PM\n9:00PM - 12:00AM"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-25 22:47:16.292310",
+ "modified": "2025-01-30 23:09:07.777969",
  "modified_by": "Administrator",
  "module": "Movie Tickets",
  "name": "Theater Show",

@@ -8,9 +8,18 @@
   "title",
   "poster",
   "synopsis",
+  "img_1",
+  "img_2",
+  "img_3",
+  "bg_img",
   "column_break_osxg",
   "director",
-  "release_date"
+  "release_date",
+  "vote",
+  "movie_type",
+  "movie_duration",
+  "language",
+  "movie_link"
  ],
  "fields": [
   {
@@ -43,11 +52,60 @@
    "fieldname": "release_date",
    "fieldtype": "Date",
    "label": "Release Date"
+  },
+  {
+   "fieldname": "vote",
+   "fieldtype": "Data",
+   "label": "Vote"
+  },
+  {
+   "fieldname": "movie_duration",
+   "fieldtype": "Duration",
+   "label": "Movie Duration"
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Select",
+   "label": "Language",
+   "options": "HIndi\nEnglish\nTamil\nTelgu\nBengali\nMarathi\nGujarati\nPunjabi\nMalayalam\nKannada"
+  },
+  {
+   "fieldname": "movie_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Genre",
+   "options": "Entertainment\nSeries\nShort Film\nAnimated\nMusical\nThriller\nHorror\nAction\nComedy\nDrama\nCrime\nHistorical\nAdventure\nWar\nSuperhero"
+  },
+  {
+   "fieldname": "movie_link",
+   "fieldtype": "Data",
+   "label": "Movie Link"
+  },
+  {
+   "fieldname": "img_1",
+   "fieldtype": "Attach Image",
+   "label": "Img 1"
+  },
+  {
+   "fieldname": "img_2",
+   "fieldtype": "Attach Image",
+   "label": "Img 2"
+  },
+  {
+   "fieldname": "img_3",
+   "fieldtype": "Attach Image",
+   "label": "Img 3"
+  },
+  {
+   "fieldname": "bg_img",
+   "fieldtype": "Attach Image",
+   "label": "Bg Img"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-25 22:54:57.012642",
+ "modified": "2025-02-05 23:50:25.402506",
  "modified_by": "Administrator",
  "module": "Movie Tickets",
  "name": "movie",

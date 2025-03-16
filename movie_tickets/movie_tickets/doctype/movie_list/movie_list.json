@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-30 23:05:07.808532",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "movies",
+  "poster",
+  "vote",
+  "release_date",
+  "description",
+  "top_movies"
+ ],
+ "fields": [
+  {
+   "fieldname": "movies",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Movies",
+   "options": "movie"
+  },
+  {
+   "fetch_from": "movies.poster",
+   "fieldname": "poster",
+   "fieldtype": "Data",
+   "label": "Poster"
+  },
+  {
+   "fieldname": "vote",
+   "fieldtype": "Rating",
+   "label": "Vote"
+  },
+  {
+   "fetch_from": "movies.release_date",
+   "fieldname": "release_date",
+   "fieldtype": "Data",
+   "label": "Release Date"
+  },
+  {
+   "fetch_from": "movies.synopsis",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "top_movies",
+   "fieldtype": "Select",
+   "label": "Top Movies",
+   "options": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-31 11:47:58.648995",
+ "modified_by": "Administrator",
+ "module": "Movie Tickets",
+ "name": "Movie List",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
