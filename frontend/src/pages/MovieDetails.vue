@@ -18,9 +18,11 @@
         </p>
       </div>
       </div>
-
       <div class="max-w-full">
         
+    <!-- page 1 -->
+
+
         <div class="mx-12" v-if="currentStep === 0">
            <div class="flex justify-center space-x-4 mt-4">
               <img :src="movieDoc.img_1" class="w-1/4 max-w-[150px] h-[120px]  object-cover rounded-md" />
@@ -52,6 +54,8 @@
         </div>
       </div>
 
+
+<!-- page 2 -->
       <div v-else-if="currentStep === 1">
         <h2 class="font-medium text-xl mt-7 text-pink-300">How many seats?</h2>
 
@@ -66,6 +70,8 @@
           >
         </div>
       </div>
+
+<!-- page  3 -->
 
       <div v-else-if="currentStep === 2">
         <div class="flex flex-col space-y-4">
@@ -102,6 +108,8 @@
         </div>
       </div>
 
+      <!-- page 4 -->
+
         <div v-else-if="currentStep === 3">
         <h2 class="font-medium text-xl mt-7 text-yellow-300">Select Seats</h2>
 
@@ -129,6 +137,8 @@
           </div>
         </div>
       </div>
+
+<!-- page 5 -->
 
       <div v-else-if="currentStep === 4">
         <div class="w-full flex items-center flex-col mt-7">

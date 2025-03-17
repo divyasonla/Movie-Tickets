@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-800 text-white p-4">
+  <nav class="bg-gray-800 text-white p-4 relative">
     <div class="container mx-auto flex justify-between items-center">
       <!-- Logo -->
       <div class="text-xl font-semibold">Movie App</div>
@@ -13,12 +13,12 @@
 
       <!-- Navigation Links -->
       <div 
-        class="lg:flex lg:space-x-6 lg:items-center w-full lg:w-auto bg-gray-800 absolute top-16 left-0 right-0 lg:static p-4 lg:p-0 transition-all duration-300"
+        class="lg:flex lg:space-x-6 lg:items-center absolute lg:static w-full lg:w-auto top-16 left-0 right-0 bg-gray-900 lg:bg-transparent p-4 lg:p-0 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out z-50"
         :class="isMenuOpen ? 'block' : 'hidden lg:flex'"
       >
-        <router-link to="/" class="block py-2 lg:py-0 px-4 text-white hover:underline">Home</router-link>
-        <router-link to="/movies" class="block py-2 lg:py-0 px-4 text-white hover:underline">Movie List</router-link>
-        <router-link to="/login" class="block py-2 lg:py-0 px-4 text-white hover:underline">Login</router-link>
+        <router-link to="/" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Home</router-link>
+        <router-link to="/movies" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Movie List</router-link>
+        <router-link to="/login" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Login</router-link>
       </div>
     </div>
   </nav>
@@ -35,11 +35,17 @@ export default {
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
-      console.log("Menu Toggled:", this.isMenuOpen); // Debugging log
+    },
+    closeMenu() {
+      this.isMenuOpen = false; // Navbar close karne ka function
     }
   }
 }
 </script>
 
 <style scoped>
+/* Ensure navbar is on top */
+nav {
+  z-index: 1000;
+}
 </style>

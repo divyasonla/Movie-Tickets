@@ -62,15 +62,23 @@
         <p class="text-gray-700 text-sm text-center"><span class="font-bold">Language:</span> {{ selectedMovie.language }}</p>
 
         <p class="text-gray-600 text-sm text-center"><span class="font-bold">Description:</span> {{ selectedMovie.synopsis }}</p>
+
+
+        <!-- video link -->
+
+
         <div v-if="selectedMovie.movie_link" class="mt-4">
           <p class="text-gray-700 text-sm font-bold">Watch Video:</p>
+
           <iframe 
             :src="formatVideoLink(selectedMovie.movie_link) + '?controls=0&showinfo=0&modestbranding=1&rel=0'"
             class="w-full h-64 rounded-lg"
             frameborder="0" 
             allowfullscreen>
           </iframe>
+
         </div>
+
         <div class="flex justify-between">
        <button @click="closeModal" class="mt-4 px-6 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 text-left">
           Close
@@ -137,6 +145,8 @@ const formatVideoLink = (url) => {
 
   const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]+)/;
   const match = url.match(youtubeRegex);
+  // const match = url.match(youtubeRegex);
+ch(youtubeRegex);
 
   if (match) {
     return `https://www.youtube.com/embed/${match[2]}?controls=0&showinfo=0&modestbranding=1&rel=0`;

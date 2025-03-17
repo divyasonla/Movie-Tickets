@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/pages/Home.vue'), // Home component
+    component: () => import('@/pages/Home.vue'), 
   },
   {
     path: '/movies',
@@ -34,7 +34,7 @@ let router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to, from, next) => {
+async (to, from, next) => {
   let isLoggedIn = session.isLoggedIn;
   try {
     await userResource.promise;
@@ -45,11 +45,11 @@ router.beforeEach(async (to, from, next) => {
   if (to.name === 'Login' && isLoggedIn) {
     next({ name: 'Home' });
   } else if (to.name !== 'Login' && !isLoggedIn) {
-    next({ name: 'Login' });  // ✅ 'Login' ka name match hoga
+    next({ name: 'Login' }); 
   } else {
-    next();
+    next();  // Call `next()` only once!
   }
-});
+}
 
 
 
