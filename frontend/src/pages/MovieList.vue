@@ -145,8 +145,6 @@ const formatVideoLink = (url) => {
 
   const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]+)/;
   const match = url.match(youtubeRegex);
-  // const match = url.match(youtubeRegex);
-ch(youtubeRegex);
 
   if (match) {
     return `https://www.youtube.com/embed/${match[2]}?controls=0&showinfo=0&modestbranding=1&rel=0`;

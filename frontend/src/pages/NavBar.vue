@@ -16,9 +16,9 @@
         class="lg:flex lg:space-x-6 lg:items-center absolute lg:static w-full lg:w-auto top-16 left-0 right-0 bg-gray-900 lg:bg-transparent p-4 lg:p-0 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out z-50"
         :class="isMenuOpen ? 'block' : 'hidden lg:flex'"
       >
-        <router-link to="/" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Home</router-link>
+        <router-link to="/home" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Home</router-link>
         <router-link to="/movies" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Movie List</router-link>
-        <router-link to="/login" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Login</router-link>
+        <router-link to="/" class="block py-2 lg:py-0 px-4 text-white hover:underline" @click="closeMenu">Login</router-link>
       </div>
     </div>
   </nav>
@@ -37,14 +37,14 @@ export default {
       this.isMenuOpen = !this.isMenuOpen;
     },
     closeMenu() {
-      this.isMenuOpen = false; // Navbar close karne ka function
+      this.isMenuOpen = false; 
     }
   }
 }
 </script>
 
 <style scoped>
-/* Ensure navbar is on top */
+
 nav {
   z-index: 1000;
 }

@@ -1,5 +1,9 @@
 <template>
+  <div>
+    <NavBar />
+
   <div class="px-4 md:px-12 lg:px-20" v-if="!movieResource.loading && movieResource.doc" >
+
     <h1 class="text-yellow-300 font-bold text-[24px] md:text-[32px]">{{ movieDoc.title }}</h1>
     <div class="mt-1 flex flex-row items-center justify-between">
       <div class="flex flex-col space-y-3">
@@ -169,11 +173,14 @@
       >
     </div>
   </div>
+</div>
+
 </template>
 
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { createDocumentResource, createListResource } from 'frappe-ui'
+import NavBar from './NavBar.vue'
 
 const props = defineProps({
   movieName: {
